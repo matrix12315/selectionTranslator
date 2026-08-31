@@ -106,6 +106,7 @@ foreach ($artifact in $artifacts) {
 Copy-Item -LiteralPath $configTemplate -Destination (Join-Path $outputDirectory "config.example.toml") -Force
 $documentation = @(
     "README.md",
+    "README.zh-CN.md",
     "docs\SETUP.md",
     "docs\HOTKEYS.md",
     "docs\FALLBACKS.md",
@@ -120,8 +121,8 @@ foreach ($document in $documentation) {
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
         throw "Documentation source was not found: $source"
     }
-    $destination = if ($document -eq "README.md") {
-        Join-Path $outputDirectory "README.md"
+    $destination = if ($document.StartsWith("README", [StringComparison]::OrdinalIgnoreCase)) {
+        Join-Path $outputDirectory ([IO.Path]::GetFileName($document))
     } else {
         Join-Path $packageDocs ([IO.Path]::GetFileName($document))
     }

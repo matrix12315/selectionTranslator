@@ -1,8 +1,22 @@
 # Selection Translate
 
+[简体中文](README.zh-CN.md)
+
 Selection Translate is a lightweight native Windows x64 assistant for selected or hovered text. It obtains sentence context when the target application exposes it, sends the chosen prompt to an OpenAI-compatible API, and streams Markdown into a compact popup. The resident uses native Windows UI instead of Electron or WebView, and the manager runs only when opened.
 
 This repository currently provides an unsigned preview build. Selection, Manual, and opt-in Hover share one priority-aware extraction pipeline. UI Automation is tried first and clipboard or Windows OCR is used only when applicable. No provider request is made when no valid text is detected.
+
+## Lightweight by design
+
+Low resource use is a core product feature, not an afterthought:
+
+- The always-running resident is native Rust and Win32, with no Electron, WebView, browser engine, async runtime, or bundled OCR model.
+- Settings, prompts, and history live in a separate manager process that starts only when opened and exits when its last window closes.
+- OCR captures only a bounded in-memory region when it is needed; screenshots are not saved to disk.
+- SQLite is opened only for short background history writes, and completed history is capped at the newest 1,000 entries.
+- Hover is opt-in, and extraction stops as soon as one path returns valid text.
+
+The resident target with the manager closed is **below 20 MiB private working set** after warm-up. That target is still a pending five-minute release gate, so the preview does not yet claim a verified `<20 MiB` result; see [Verification status](docs/VERIFICATION.md).
 
 ## Install the preview
 
