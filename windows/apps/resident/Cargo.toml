@@ -1,0 +1,11 @@
+[package]
+name = "selection-translate-resident"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+selection-core = { path = "../../../crates/core" }
+selection-platform-interface = { path = "../../../crates/platform-interface" }
+selection-platform-windows = { path = "../../crates/platform-windows" }
+selection-provider-openai = { path = "../../../crates/provider-openai" }
+selection-storage = { path = "../../../crates/storage" }

@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/platform-interface",
+    "windows/crates/platform-windows",
+    "crates/provider-openai",
+    "crates/storage",
+    "windows/apps/resident",
+    "windows/apps/manager",
+]
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = "z"
+panic = "abort"
+strip = "symbols"

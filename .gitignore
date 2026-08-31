@@ -1,0 +1,37 @@
+# Rust/Cargo build output (configured under the Windows tree)
+/windows/target/
+
+# Project-local Windows scratch, downloads, reports, and packaging output
+/windows/tmp/
+/windows/dist/
+/windows/release/
+
+# Local agent instructions and internal work notes (not product source)
+/.codex/
+/AGENTS.md
+/IMPLEMENTATION_PLAN.md
+/TASK21_HANDOFF.md
+
+# Stray compiler output
+*.obj
+
+# Local credentials and environment overrides
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Runtime logs and transient files
+*.log
+*.tmp
+*.bak
+
+# IDE and operating-system state
+/.vs/
+/.vscode/
+/.idea/
+*.user
+*.suo
+.DS_Store
+Thumbs.db

@@ -1,0 +1,7 @@
+[package]
+name = "selection-platform-interface"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+selection-core = { path = "../core" }

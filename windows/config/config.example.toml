@@ -1,0 +1,90 @@
+# Copy this file to %LOCALAPPDATA%\SelectionTranslate\config.toml.
+# Never put an API key, token, or password in this file.
+
+[[profiles]]
+id = "contextual-zh-en"
+name = "Contextual Chinese-English translation"
+system_prompt = "Translate Chinese and English naturally, preserving meaning and context. Return only the translation."
+user_template = "Translate only Target. Use Context only to disambiguate:\nTarget:\n{target}\nContext:\n{context}"
+temperature = 0.2
+max_output_tokens = 512
+
+[[profiles]]
+id = "word-explanation"
+name = "Word explanation"
+system_prompt = "Explain the word for a language learner with a concise definition, pronunciation, part of speech, and one example."
+user_template = "Explain only Word. Use Sentence context only to disambiguate:\nWord:\n{target}\nSentence context:\n{context}"
+temperature = 0.2
+max_output_tokens = 512
+
+[[profiles]]
+id = "wiki-style"
+name = "Wiki-style explanation"
+system_prompt = "Explain the target in a factual, neutral, wiki-style summary. State uncertainty when context is insufficient."
+user_template = "Explain only Subject. Use Context only as supporting information:\nSubject:\n{target}\nContext:\n{context}"
+temperature = 0.2
+max_output_tokens = 768
+
+[[profiles]]
+id = "linguist-analysis"
+name = "Expert linguist analysis"
+system_prompt = """You are an expert linguist and translator. Analyze the input and respond mainly in English. Return concise, valid Markdown using exactly these four level-2 headings, exactly once each, in this order, with no introduction, conclusion, alternate format, or repeated heading:
+## Translation
+- Chinese: Provide the Chinese translation.
+- English: If the input is not English, provide its natural English translation; otherwise write None.
+- Words: List key words as entries containing word, IPA/soundmark, part of speech (n./v./adj./etc.), and Chinese meaning.
+- Error check: First check spelling and grammar. If an error exists, identify the most likely intended wording and translate it; otherwise write None.
+## Idioms and Grammar
+Briefly explain usage, simple grammar points, and relevant common phrasal verbs or idioms; write None when not applicable.
+## Other Forms
+List common noun, verb, adjective, and adverb forms when applicable; write None when not applicable.
+## Reasoning
+For non-English input, briefly explain how the English translation is natural and authentic rather than literal or Chinglish. For English input, briefly explain the nuance behind the Chinese translation choice. Write None when not applicable. Do not create any other heading, do not repeat a heading, and never use a `Translation:` field or add alternate translations. Use None for every inapplicable field."""
+user_template = "Analyze only this input:\n{target}\n\nSentence context for disambiguation only:\n{context}"
+temperature = 0.2
+max_output_tokens = 700
+
+[[profiles]]
+id = "code-specialist"
+name = "Program specialist"
+system_prompt = """You are a program specialist. Examine the code first and briefly identify flaws. If it is correct, explain it according to the requested structure. Respond mainly in English using concise Markdown:
+1. Break down each part of the code.
+2. Explain what each line does.
+3. State the overall purpose of the code."""
+user_template = "Analyze this code snippet:\n{target}"
+temperature = 0.2
+max_output_tokens = 700
+
+[[profiles]]
+id = "concise-explanation"
+name = "Concise explanation and context"
+system_prompt = "Explain the input content mainly in English. Start with a concise, non-redundant summary explanation. Then add a short section containing useful common knowledge related to the content."
+user_template = "Input:\n{target}\n\nSentence context for disambiguation only:\n{context}"
+temperature = 0.2
+max_output_tokens = 500
+
+[defaults]
+selection = "contextual-zh-en"
+hover = "word-explanation"
+
+[provider]
+# API key setup (choose one):
+# 1. Preferred: open selection-translate-manager.exe, enter the key under
+#    "API key", and choose "Save key". Windows Credential Manager stores it
+#    under the credential_target below.
+# 2. Alternatively, set OPENAI_API_KEY in the resident process environment
+#    before launching selection-translate-resident.exe.
+# An api_key TOML field is intentionally unsupported. Never paste a key here.
+# Use the provider's OpenAI-compatible base URL. A host-only URL or a base URL
+# ending in /v1 is accepted; do not add /chat/completions yourself.
+endpoint = "https://api.openai.com/v1"
+model = "gpt-4o-mini"
+credential_target = "SelectionTranslate/OpenAI"
+
+[hotkeys]
+# Profile cycling is registered by the resident and can be changed before startup.
+cycle_profiles = "Ctrl+Alt+P"
+
+[ui]
+# Manager interface language: "en" or "zh-CN". This does not change prompts or translations.
+manager_language = "en"
